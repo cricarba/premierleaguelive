@@ -16,7 +16,7 @@ func main() {
 	fmt.Println("Match Id: ")
 	fmt.Scanln(&w1)
 	fmt.Println("Init:.. ")
-	teller := time.Tick(3 * time.Second)
+	teller := time.Tick(30 * time.Second)
 	finish := time.After(3 * time.Hour)
 	for {
 		select {
@@ -71,11 +71,11 @@ func postTweet(fixture string) {
 	hashTag := "#" + match.Fixture.Teams[0].Team.Club.Abbr + match.Fixture.Teams[1].Team.Club.Abbr
 	score := strconv.FormatInt(match.Fixture.Teams[0].Score, 10) + "-" + strconv.FormatInt(match.Fixture.Teams[1].Score, 10)
 
-	//tweet := "{hashTag.Text} \n/n⚽ {teamHome.Text} {score.Text} {teamAway.Text} \n/n🕕 {timeMatch}  \n/n🎙️ {message} \n/n#PremierLeague #PL"
+	//tweet := "{hashTag.Text} \n/n⚽ {teamHome.Text} {score.Text} {teamAway.Text} \n/n🕕 {timeMatch}'  \n/n🎙️ {message} \n/n#PremierLeague #PL"
 	//tweetTemplate := "%s \n \n⚽ %s %s %s \n \n🕕 %s  \n/n🎙️ %s \n \n#PremierLeague #PL"
-	for i := 0; i < 3; i++ {
-		//Printfln(tweetTemplate, hashTag, match.Fixture.Teams[0].Team.ShortName, score, match.Fixture.Teams[1].Team.ShortName, match.Events.Content[i].Time.Label, match.Events.Content[i].Text)
-		tweet := hashTag + " \n \n ⚽ " + match.Fixture.Teams[0].Team.ShortName + " " + score + " " + match.Fixture.Teams[1].Team.ShortName + " \n\n🕕 " + match.Events.Content[i].Time.Label + " \n\n 🎙️" + match.Events.Content[i].Text + " \n\n #PremierLeague #PL"
+	for i := 2; i >= 0; i-- {
+
+		tweet := hashTag + " \n \n ⚽ " + match.Fixture.Teams[0].Team.ShortName + " " + score + " " + match.Fixture.Teams[1].Team.ShortName + " \n\n🕕 " + match.Events.Content[i].Time.Label + "' \n\n🎙️ " + match.Events.Content[i].Text + " \n\n #PremierLeague #PL"
 		_, _, err := clientTwitter.Statuses.Update(tweet, nil)
 		if err != nil {
 			log.Println(err)
